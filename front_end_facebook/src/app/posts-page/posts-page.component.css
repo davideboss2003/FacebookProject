@@ -1,0 +1,215 @@
+/* posts-page.component.css */
+
+.posts-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.create-post-button-container {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.create-post-button-container button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.create-post-form, .create-tag-form {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #e9f5e9;
+  border-radius: 8px;
+}
+
+.create-post-form label, .create-tag-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.create-post-form input,
+.create-post-form textarea,
+.create-post-form select,
+.create-tag-form input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+}
+
+.create-post-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.tag-selection {
+  margin-top: 20px;
+}
+
+.tags-list label {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.tags-list input {
+  margin-right: 5px;
+}
+
+.post-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status.JUST_POSTED {
+  background-color: #4caf50;
+}
+
+.status.FIRST_REACTIONS {
+  background-color: #ff9800;
+}
+
+.status.OUTDATED {
+  background-color: #f44336;
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 10px 0;
+}
+
+.post-meta span {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.post-text {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.post-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.post-tags {
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 5px 10px;
+  margin: 0 5px 5px 0;
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.post-actions {
+  margin-top: 15px;
+}
+
+.post-actions button {
+  background-color: #e53935;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.post-actions button:hover {
+  background-color: #c62828;
+}
+
+.edit-form {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.edit-form input,
+.edit-form textarea,
+.edit-form select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+}
+
+.edit-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.edit-form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-form-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-form-buttons button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-form-buttons button:last-child {
+  background-color: #9e9e9e;
+  color: white;
+}
+

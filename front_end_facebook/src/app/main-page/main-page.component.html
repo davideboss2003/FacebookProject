@@ -1,0 +1,274 @@
+<div class="main-container">
+  <h1>Welcome to the Main Page</h1>
+
+  <div *ngIf="isAdmin" class="admin-actions">
+  <h3>👮 Admin Controls</h3>
+
+  <button (click)="showBanSection = !showBanSection">🚫 Ban User</button>
+  <button (click)="showUnbanSection = !showUnbanSection">✅ Unban User</button>
+
+  <div *ngIf="showBanSection" class="ban-section">
+    <label>Select User to Ban:
+      <select [(ngModel)]="selectedUserToBan">
+        <option *ngFor="let user of notBannedUsers" [value]="user.userId">{{ user.name }}</option>
+      </select>
+    </label>
+    <button (click)="banUser()">🚫 Confirm Ban</button>
+  </div>
+
+  <div *ngIf="showUnbanSection" class="unban-section">
+    <label>Select User to Unban:
+      <select [(ngModel)]="selectedUserToUnban">
+        <option *ngFor="let user of bannedUsers" [value]="user.userId">{{ user.name }}</option>
+      </select>
+    </label>
+    <button (click)="unbanUser()">✅ Confirm Unban</button>
+  </div>
+</div>
+
+  <div class="filter-controls">
+    <h3>🔍 Filter Posts</h3>
+    <select [(ngModel)]="filterMode">
+      <option value="">-- Select Filter --</option>
+      <option value="tag">By Tag</option>
+      <option value="title">By Title</option>
+      <option value="user">By User</option>
+      <option value="mine">My Posts</option>
+    </select>
+
+    <div *ngIf="filterMode === 'tag'">
+      <label>Select Tag:
+        <select [(ngModel)]="selectedFilterTagId">
+          <option *ngFor="let tag of tags" [value]="tag.tagId">{{ tag.name }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div *ngIf="filterMode === 'user'">
+      <label>Select User:
+        <select [(ngModel)]="selectedFilterUserId">
+          <option *ngFor="let user of users" [value]="user.userId">{{ user.name }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div *ngIf="filterMode === 'title'">
+      <label>Search Title:
+        <input type="text" [(ngModel)]="titleSearchText" />
+      </label>
+    </div>
+
+    <button (click)="applyFilter()">✅ Apply Filter</button>
+    <button (click)="clearFilter()">❌ Clear Filter</button>
+  </div>
+
+  <div class="create-post-button-container">
+    <button class="create-post-button" (click)="startCreatingPost()">➕ Create a Post</button>
+  </div>
+
+  <div *ngIf="creatingPost" class="create-post-form">
+    <h2>Create a New Post</h2>
+
+    <label>
+      Title:
+      <input [(ngModel)]="newPostTitle" />
+    </label>
+
+    <label>
+      Text:
+      <textarea [(ngModel)]="newPostText"></textarea>
+    </label>
+
+    <label>
+      Picture URL:
+      <input [(ngModel)]="newPostPicture" />
+    </label>
+
+    <button (click)="createPost()">💾 Save Info for Post</button>
+
+    <div *ngIf="createdPostId" class="tag-selection">
+      <h3>Select Tags for the Post</h3>
+
+      <div class="tags-list">
+        <label *ngFor="let tag of tags">
+          <input type="checkbox" [value]="tag.tagId" (change)="toggleTagSelection(tag.tagId!)" />
+          {{ tag.name }}
+        </label>
+      </div>
+
+      <button (click)="addTagsToPost()">✅ Add Tags to Post</button>
+      <button (click)="startCreatingTag()">➕ Create Tag</button>
+
+      <div *ngIf="creatingTag" class="create-tag-form">
+        <label>
+          Tag Name:
+          <input [(ngModel)]="newTagName" />
+        </label>
+        <button (click)="createTag()">📎 Create Tag</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let post of filteredPosts" class="post-card">
+    <div class="post-header">
+      <h2>{{ post.title }}</h2>
+      <span class="status" [ngClass]="post.status">{{ post.status }}</span>
+    </div>
+
+    <div class="post-meta">
+      <span>👤 Author: {{ post.author.name }}
+          <span *ngIf="post.author?.userId != null && userScores[post.author.userId!] != null">
+              (Score: {{ userScores[post.author.userId!] }})
+          </span>
+      </span>
+      <span>📅 {{ post.creationDateTime | date: 'medium' }}</span>
+    </div>
+
+    <p class="post-text">{{ post.text }}</p>
+
+    <div *ngIf="post.picture" class="post-image">
+      <img [src]="post.picture" alt="Post Image" />
+    </div>
+
+    <div class="post-tags">
+      <span *ngFor="let tag of getPostTags(post.postId!)" class="tag">{{ tag.name }}</span>
+      <span class="vote-count">Votes: {{ voteCounts[post.postId!] }}</span>
+    </div>
+
+    <div class="vote-buttons" *ngIf="post.author.userId !== this.currentUser?.userId">
+      <!-- Show buttons only if user hasn't voted yet -->
+      <ng-container *ngIf="!hasUserVoted(post.postId!); else votedText">
+        <button (click)="vote(post.postId!, 'UPVOTE')">Upvote</button>
+        <button (click)="vote(post.postId!, 'DOWNVOTE')">Downvote</button>
+      </ng-container>
+      <ng-template #votedText>
+        <span class="voted-label">{{ getVoteLabel(post.postId!) }}</span>
+      </ng-template>
+    </div>
+
+    <div *ngIf="editingPostId === post.postId" class="edit-post-form">
+      <h3>Edit Post</h3>
+    
+      <label>
+        Title:
+        <input [(ngModel)]="updatedTitle" />
+      </label>
+    
+      <label>
+        Text:
+        <textarea [(ngModel)]="updatedText"></textarea>
+      </label>
+    
+      <label>
+        Picture URL:
+        <input [(ngModel)]="updatedPicture" />
+      </label>
+    
+      <label>
+        Status:
+        <select [(ngModel)]="updatedStatus">
+          <option value="JUST_POSTED">JUST_POSTED</option>
+          <option value="FIRST_REACTIONS">FIRST_REACTIONS</option>
+          <option value="OUTDATED">OUTDATED</option>
+        </select>
+      </label>
+    
+      <button class="save-button" (click)="applyPostChanges()">💾 Save Changes</button>
+      <button class="cancel-button" (click)="cancelEditing()">❌ Cancel</button>
+    </div>
+
+    <div class="post-comments">
+      <h4>💬 Comments:</h4>
+
+      <!-- Button to start commenting -->
+      <!-- Create Comment Button -->
+      <div class="comment-actions">
+        <button (click)="startCommenting(post.postId!)" *ngIf="commentingPostId !== post.postId">📝 Create Comment</button>
+      </div>
+
+      <!-- Comment Form -->
+      <div *ngIf="commentingPostId === post.postId" class="comment-form">
+        <label>
+          Comment Text:
+          <textarea [(ngModel)]="newCommentText"></textarea>
+        </label>
+
+        <label>
+          Picture URL (optional):
+          <input type="text" [(ngModel)]="newCommentPicture" />
+        </label>
+
+        <button (click)="postComment(post.postId!)">✅ Post Comment</button>
+        <button (click)="cancelCommenting()">❌ Cancel</button>
+      </div>
+
+
+      <div *ngFor="let comment of getPostComments(post.postId!)" class="comment">
+        <div class="comment-meta">
+          <strong>{{ comment.user.name }}</strong> — 
+          <span *ngIf="comment.user?.userId != null && userScores[comment.user.userId!] != null">
+            (Score: {{ userScores[comment.user.userId!] }})
+          </span>
+          <em>{{ comment.createdAt | date: 'medium' }}</em>
+        </div>
+        <div class="comment-text">{{ comment.text }}</div>
+        <div *ngIf="comment.picture" class="comment-image">
+          <img [src]="comment.picture" alt="Comment Image" />
+
+          <span class = "vote-count-comment"> VotesComment: {{voteCountsForComments[comment.commentId!]}}</span>
+
+        </div>
+
+        <div *ngIf = "editingCommentId === comment.commentId" class="edit-comment-form">
+          <h3>Edit Comment</h3>
+          <label>
+            Comment Text:
+            <textarea [(ngModel)]="updatedCommentText"></textarea>
+          </label>
+
+          <label>
+            Picture URL:
+            <input [(ngModel)]="updatedCommentPicture" />
+          </label>
+
+          <button class="save-comment-button" (click)="applyCommentChanges()">💾 Save Changes</button>
+          <button class="cancel-comment-button" (click)="cancelEditingComment()">❌ Cancel</button>
+
+        </div>  
+
+        <div class="comment-actions" *ngIf="canDeleteComment(comment)">
+          <button class="delete-comment-button" (click)="deleteCommentWithVotes(comment.commentId!)">🗑️ Delete Comment</button>
+        </div>
+
+        <div class ="comment-actions" *ngIf="canEditComment(comment)">
+          <button class="update-comment-button" (click)="startEditingComment(comment)">✏️ Update Comment</button>
+        </div> 
+
+          <div class="vote-buttons_comments" *ngIf="comment.user.userId !== this.currentUser?.userId">
+            <!-- Show buttons only if user hasn't voted yet -->
+            <ng-container *ngIf="!hasUserVotedComment(comment.commentId!); else votedText">
+              <button (click)="voteComment(comment.commentId!, 'UPVOTE')">Upvote</button>
+              <button (click)="voteComment(comment.commentId!, 'DOWNVOTE')">Downvote</button>
+            </ng-container>
+            <ng-template #votedText>
+              <span class="voted-label">{{ getVoteLabelForComment(comment.commentId!) }}</span>
+            </ng-template>
+          </div>
+
+      </div>
+    </div>
+    
+    
+
+    <!-- Add this under post-tags or wherever you want the button -->
+    <div class="post-actions" *ngIf="canDelete(post)">
+      <button class="delete-button" (click)="deletePost(post.postId!)">🗑️ Delete</button>
+    </div>
+
+    <div class="post-actions" *ngIf="canEdit(post)">
+      <button class="update-button" (click)="startEditingPost(post)">✏️ Update</button>
+    </div>
+    
+    
+  </div>
+</div>

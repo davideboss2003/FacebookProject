@@ -1,0 +1,113 @@
+<!-- posts-page.component.html -->
+<div class="posts-container">
+  <h1>All Posts</h1>
+
+  <div class="create-post-button-container">
+    <button (click)="startCreatingPost()">➕ Create a Post</button>
+  </div>
+
+  <div *ngIf="creatingPost" class="create-post-form">
+    <h2>Create a New Post</h2>
+
+    <label>
+      Select Author:
+      <select [(ngModel)]="selectedUserId">
+        <option [ngValue]="null" disabled>Select a user</option>
+        <option *ngFor="let user of users" [ngValue]="user.userId">{{ user.name }}</option>
+      </select>
+    </label>
+
+    <label>
+      Title:
+      <input [(ngModel)]="newPostTitle" />
+    </label>
+
+    <label>
+      Text:
+      <textarea [(ngModel)]="newPostText"></textarea>
+    </label>
+
+    <label>
+      Picture URL:
+      <input [(ngModel)]="newPostPicture" />
+    </label>
+
+    <button (click)="createPost()">💾 Save Info for Post</button>
+
+    <div *ngIf="createdPostId" class="tag-selection">
+      <h3>Select Tags for the Post</h3>
+
+      <div class="tags-list">
+        <label *ngFor="let tag of tags">
+          <input type="checkbox" [value]="tag.tagId" (change)="toggleTagSelection(tag.tagId!)" /> {{ tag.name }}
+        </label>
+      </div>
+
+      <button (click)="addTagsToPost()">✅ Add Tags to Post</button>
+
+      <button (click)="startCreatingTag()">➕ Create Tag</button>
+
+      <div *ngIf="creatingTag" class="create-tag-form">
+        <label>
+          Tag Name:
+          <input [(ngModel)]="newTagName" />
+        </label>
+        <button (click)="createTag()">📎 Create Tag</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let post of posts" class="post-card">
+    <div class="post-header">
+      <h2>{{ post.title }}</h2>
+      <span class="status" [ngClass]="post.status">{{ post.status }}</span>
+    </div>
+
+    <div class="post-meta">
+      <span>👤 Author: {{ post.author.name }}</span>
+      <span>📅 {{ post.creationDateTime | date: 'medium' }}</span>
+    </div>
+
+    <p class="post-text">{{ post.text }}</p>
+
+    <div *ngIf="post.picture" class="post-image">
+      <img [src]="post.picture" alt="Post Image" />
+    </div>
+
+    <div class="post-tags">
+      <span *ngFor="let tag of getPostTags(post.postId!)" class="tag">{{ tag.name }}</span>
+    </div>
+
+    <div class="post-actions">
+      <button (click)="deletePost(post.postId!)">🗑️ Delete Post</button>
+      <button (click)="startEditingPost(post)">✏️ Update Post</button>
+    </div>
+
+    <div *ngIf="editingPostId === post.postId" class="edit-form">
+      <label>Title:
+        <input [(ngModel)]="updatedTitle" />
+      </label>
+
+      <label>Text:
+        <textarea [(ngModel)]="updatedText"></textarea>
+      </label>
+
+      <label>Picture URL:
+        <input [(ngModel)]="updatedPicture" />
+      </label>
+
+      <label>Status:
+        <select [(ngModel)]="updatedStatus">
+          <option value="JUST_POSTED">JUST_POSTED</option>
+          <option value="FIRST_REACTIONS">FIRST_REACTIONS</option>
+          <option value="OUTDATED">OUTDATED</option>
+        </select>
+      </label>
+
+      <div class="edit-form-buttons">
+        <button (click)="applyPostChanges()">✅ Apply Changes</button>
+        <button (click)="cancelEditing()">❌ Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

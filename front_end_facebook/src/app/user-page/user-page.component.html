@@ -1,0 +1,47 @@
+<div class="user-container">
+    <h1>User Management</h1>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Admin</th>
+          <th>Banned</th>
+          <th>Score</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <ng-container *ngIf="editingUserId !== user.userId; else editMode">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
+            <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+            <td>{{ user.score }}</td>
+            <td>
+              <button (click)="startEdit(user)">Update User</button>
+              <button (click)="deleteUser(user.userId)">Delete User</button>
+            </td>
+          </ng-container>
+  
+          <ng-template #editMode>
+            <td><input [(ngModel)]="editedUser.name" /></td>
+            <td><input [(ngModel)]="editedUser.email" /></td>
+            <td><input [(ngModel)]="editedUser.phoneNumber" /></td>
+            <td><input type="checkbox" [(ngModel)]="editedUser.isAdmin" /></td>
+            <td><input type="checkbox" [(ngModel)]="editedUser.isBanned" /></td>
+            <td><input type="number" [(ngModel)]="editedUser.score" /></td>
+            <td>
+              <button (click)="updateUser()">Update</button>
+              <button (click)="cancelEdit()">Cancel</button>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
