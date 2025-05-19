@@ -50,26 +50,6 @@ JPA / Hibernate for ORM.
 Unit Testing with JUnit (backend).
 E2E Testing with Protractor/Karma (frontend).
 
-📂 Project Structure
-FacebookProject/
-├── front_end_facebook/       # Angular frontend
-│   ├── src/
-│   ├── e2e/                  # End-to-end tests
-│   └── angular.json
-│
-├── back_end_facebook/        # Java Spring Boot backend
-│   ├── src/
-│   │   ├── controller/
-│   │   ├── service/
-│   │   ├── repository/
-│   │   ├── model/
-│   │   └── security/
-│   └── application.properties
-│
-├── demo/                     # Demo assets
-└── README.md
-
-
 📈 Future Improvements
 Messaging System: Implement real-time chat between users.
 Notifications: Real-time notifications for likes, comments, and friend requests.
