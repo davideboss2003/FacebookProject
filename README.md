@@ -11,7 +11,10 @@ FacebookProject is a full-stack web application that emulates core functionaliti
 
 ## Screenshots
 
-![Login Page](login.jpg)
+<a href="https://github.com/tomageorge0421/FacebookProject">
+  <img src="login.jpg" alt="Logo" width="700"/>
+</a>
+
 ![News Feed](feed.png)
 ![User Profile](profile.png)
 
