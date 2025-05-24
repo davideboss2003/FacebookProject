@@ -11,13 +11,13 @@ FacebookProject is a full-stack web application that emulates core functionaliti
 
 ## Screenshots
 
-![Login Page](images/login.jpg)
-![News Feed](images/feed.png)
-![User Profile](images/profile.png)
+![Login Page](login.jpg)
+![News Feed](feed.png)
+![User Profile](profile.png)
 
 ## Demo
 
-![Demo](images/demo.gif)
+![Demo](demo.gif)
 
 ## Tech Stack
 
