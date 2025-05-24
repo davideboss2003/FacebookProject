@@ -1,57 +1,83 @@
-FacebookProject
+# FacebookProject
 
-FacebookProject is a comprehensive full-stack web application that emulates core functionalities of Facebook. Developed using Angular for the frontend and integrated with modern web development practices, 
-this project serves as a testament to advanced skills in building scalable and interactive social networking platforms.
+<a href="https://github.com/tomageorge0421/FacebookProject">
+  <img src="feisbuc.png" alt="Logo" width="500"/>
+</a>
 
-🚀 Features
-✅ User Authentication
-Secure login and registration system with form validation and session handling.
-✅ User Profiles
-Dynamic profile pages showing user information, bios, and post activity.
-✅ News Feed
-Live feed displaying posts from friends and the community.
-✅ Post Creation & Management
-Users can create, edit, and delete posts with text and (optional) media content.
-✅ Comments & Likes
-Interactive system allowing users to comment on and like posts for engagement.
-✅ Role-Based Access Control
-Different access levels for regular users and administrators.
-✅ Admin Panel (Ban/Unban)
-Admins can ban or unban users, with automatic email & sms notifications on bans.
-✅ Tagging System
-Posts can include hashtags for better categorization and discovery.
-✅ Post Filtering
-Filter posts by:
- - Your own posts
- - Specific users
- - Post titles
- - Tags (hashtags)
-✅ Voting System
-Users can upvote or downvote both posts and comments.
-✅ Responsive Design
-Mobile-first layout compatible with various screen sizes.
-✅ Full Testing Suite
-Includes both backend unit testing (JUnit) and frontend E2E testing (Protractor).
 
-🛠️ Technologies Used
-🖥️ Frontend:
-Angular - Framework for building client applications.
-TypeScript - Typed superset of JavaScript.
-HTML5 & CSS3 - Markup and styling.
-Bootstrap - Responsive design framework.
-🧠 Backend
-Java with Spring Boot.
-Layered Architecture (Controller → Service → Repository).
-RESTful APIs.
-🗃️ Database
-MySQL.
-JPA / Hibernate for ORM.
-🧪 Testing
-Unit Testing with JUnit (backend).
-E2E Testing with Protractor/Karma (frontend).
+## Overview
 
-📈 Future Improvements
-Messaging System: Implement real-time chat between users.
-Notifications: Real-time notifications for likes, comments, and friend requests.
-Media Uploads: Enhance media handling with support for videos and albums.
-Privacy Settings: Allow users to manage the visibility of their posts and profile information.
+FacebookProject is a full-stack web application that emulates core functionalities of Facebook, built with Angular and Java Spring Boot. It showcases modern web development practices, including component-based architecture, RESTful API design, and relational database management.
+
+## Screenshots
+
+![Login Page](images/login.png)
+![News Feed](images/feed.png)
+![User Profile](images/profile.png)
+
+## Demo
+
+![Demo](images/demo.gif)
+
+## Tech Stack
+
+### Backend 🚀
+- **Language & Framework:** Java, Spring Boot (Spring MVC, Spring Data JPA, Spring Security)
+- **Database:** MySQL
+- **Build Tool:** Maven
+
+### Frontend 🎨
+- **Framework & Language:** Angular, TypeScript
+- **Styling & Structure:** HTML, CSS
+- **Reactive Programming & HTTP:** RxJS, Angular Router, HttpClientModule
+
+## Application Architecture
+
+### DataBase diagram
+![Architecture Diagram of DataBase](architectureDB.jpg)
+### Backend (N-Layered - Java Spring Boot)
+The backend employs an N-Layered architecture:
+- **Controller Layer:** Handles HTTP requests and API endpoints.
+- **Service Layer:** Contains core business logic.
+- **Repository Layer:** Manages data persistence with PostgreSQL via Spring Data JPA.
+- **Entity Layer:** Defines data models.
+- **DTO Layer:** Facilitates data transfer.
+- **Security Layer:** Implements JWT authentication and authorization.
+- The backend, is organized into standard Maven project structure. Key packages include:
+- `com.example.demo.controller`: API request handlers.
+- `com.example.demo.service`: Business logic implementation.
+- `com.example.demo.repository`: Database interaction interfaces.
+- `com.example.demo.entity`: Database table mappings.
+- `com.example.demo.dto`: Data Transfer Objects.
+- `com.example.demo.security`: Security configurations.
+
+### Frontend (Component-Based - Angular)
+The frontend is built with Angular, utilizing a component-based architecture:
+- **Modules & Components:** Reusable Angular modules and components.
+- **Services:** Centralize frontend business logic and API communication.
+- **Routing:** Angular Router manages navigation.
+- **Route Guards:** Secure routes based on authentication status.
+  The frontend, follows a typical Angular CLI project structure:
+- `src/app/`: Contains the core application code, including:
+    - **Component folders** (e.g., `login-page`, `main-page`, `posts-page`): Each holding component-specific files (`.ts`, `.html`, `.css`).
+    - `service/`: Houses Angular services for various functionalities.
+    - `app-routing.module.ts`: Defines application routes.
+    - `app.module.ts`: The main application module.
+
+## Core Features
+
+- User Authentication: Secure registration and login.
+- Profile Management: View and update user profiles.
+- Content Creation: Create, view,  edit, and delete posts.
+- Social Interactions: Comment on posts, like posts and comments.
+- Friendship System: Send, accept, and manage friend requests.
+- News Feed: Display relevant posts and updates.
+
+## Roadmap
+
+- Implement real-time notifications using WebSockets.
+- Add support for groups and events.
+- Enhance user profile customization options.
+- Improve performance and scalability.
+- Add more social features like messaging and media sharing.
+
